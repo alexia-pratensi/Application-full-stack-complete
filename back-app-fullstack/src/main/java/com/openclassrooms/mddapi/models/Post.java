@@ -1,6 +1,7 @@
 package com.openclassrooms.mddapi.models;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -20,15 +21,14 @@ import javax.validation.constraints.Size;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "POSTS")
 @Data
-@Builder
 @EntityListeners(AuditingEntityListener.class)
 @AllArgsConstructor
 @NoArgsConstructor
@@ -43,27 +43,24 @@ public class Post {
 	@Column(name = "title")
 	private String title;
 
-	@NotBlank
 	@ManyToOne
-	@JoinColumn(name = "author", referencedColumnName = "id")
-	private UserEntity User;
+	@JoinColumn(name = "user_id", referencedColumnName = "id")
+	private UserEntity user;
 
-	@NotBlank
 	@Column(name = "date")
 	private Date date;
 
-	@NotBlank
 	@Column(name = "content")
 	private String content;
 
-	@NotBlank
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "topic_id", referencedColumnName = "id")
 	private Topic topic;
 
-	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
 	@JoinColumn(name = "post_id")
-	private List<Comment> comments;
+	private List<Comment> comments = new ArrayList<>();
 
 	@CreatedDate
 	@Column(name = "created_at", updatable = false)
