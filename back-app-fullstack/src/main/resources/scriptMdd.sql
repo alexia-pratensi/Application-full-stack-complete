@@ -17,7 +17,7 @@ CREATE TABLE `USERS` (
 CREATE TABLE `POSTS` (
   `id` INT PRIMARY KEY AUTO_INCREMENT,
   `title` VARCHAR(50),
-  `user_id` INT,
+  `author` VARCHAR(50),
   `content` VARCHAR(2000),
   `date` TIMESTAMP,
   `topic_id` int,
@@ -25,8 +25,7 @@ CREATE TABLE `POSTS` (
   `updated_at` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 ALTER TABLE `POSTS` ADD FOREIGN KEY (`topic_id`) REFERENCES `TOPICS` (`id`);
-ALTER TABLE `POSTS` ADD FOREIGN KEY (`user_id`) REFERENCES `USERS`(`id`);
-
+ALTER TABLE `POSTS` ADD FOREIGN KEY (`author`) REFERENCES `USERS` (`id`);
 
 CREATE TABLE `COMMENTS` (
   `id` INT PRIMARY KEY AUTO_INCREMENT,
@@ -50,13 +49,13 @@ ALTER TABLE `SUBSCRIPTIONS` ADD FOREIGN KEY (`topic_id`) REFERENCES `TOPICS` (`i
 INSERT INTO TOPICS (title, description)
 VALUES ('Java fundamentals', 'all basics of Java world'),
        ('Angular fundamentals', 'all basics of Angular world');
-       
-INSERT INTO USERS (name, email, password)
-VALUES ('user', 'user@test.com', '$2a$10$.Hsa/ZjUVaHqi0tp9xieMeewrnZxrZ5pQRzddUXE/WjDu2ZThe6Iq');
 
-INSERT INTO POSTS (title, user_id, content, date, topic_id)
-VALUES ('Design pattern', 1, 'Design patterns in Java are reusable solutions to common software design problems. They provide best practices and templates for structuring and organizing code to achieve maintainability, scalability, and flexibility. Java is a versatile language and design patterns can be applied to various aspects of software development.', '2023-11-10', 1),
-       ('The Observable Pattern', 1 , 'The Observable Pattern is a behavioral design pattern that defines a one-to-many dependency between objects. In this pattern, one object (known as the subject or observable) maintains a list of its dependents (observers) and notifies them of any state changes, typically by calling one of their methods. The observers can then react to the state changes of the subject.', '2023-11-10', 2);
+INSERT INTO POSTS (title, author, content, date, topic_id)
+VALUES ('Design pattern', 'Romain', 'Design patterns in Java are reusable solutions to common software design problems. They provide best practices and templates for structuring and organizing code to achieve maintainability, scalability, and flexibility. Java is a versatile language and design patterns can be applied to various aspects of software development.', '2023-11-10', 1),
+       ('The Observable Pattern', 'Jean', 'The Observable Pattern is a behavioral design pattern that defines a one-to-many dependency between objects. In this pattern, one object (known as the subject or observable) maintains a list of its dependents (observers) and notifies them of any state changes, typically by calling one of their methods. The observers can then react to the state changes of the subject.', '2023-11-10', 2);
+
+INSERT INTO USERS (name, email, password)
+VALUES ('user', 'user@test.com', '$2a$10$.Hsa/ZjUVaHqi0tp9xieMeewrnZxrZ5pQRzddUXE/WjDu2ZThe6Iq'); 
 
 INSERT INTO COMMENTS (date, content, post_id, user_id)
 VALUES ('2023-12-10', 'Thank you for this post!', 1, 1),

@@ -1,6 +1,7 @@
 package com.openclassrooms.mddapi.models;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -48,13 +49,8 @@ public class Topic {
 	@Column(name = "description")
 	private String description;
 
-	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-	@JoinColumn(name = "topic_id")
-	private List<Post> posts;
-
-	@JsonIgnore
-	@ManyToMany(mappedBy = "topics")
-	private List<UserEntity> users;
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "topic")
+	private List<Post> posts = new ArrayList<>();
 
 	@CreatedDate
 	@Column(name = "created_at", updatable = false)
