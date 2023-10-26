@@ -1,25 +1,20 @@
 package com.openclassrooms.mddapi.services;
 
-import java.util.List;
-import com.openclassrooms.mddapi.models.Topic;
 import com.openclassrooms.mddapi.models.UserEntity;
-import com.openclassrooms.mddapi.dto.UserEntityDto;
+import com.openclassrooms.mddapi.dto.LoginRequest;
 
 public interface UserIService {
 
-    // public boolean existsByEmail(String email);
+    public UserEntity createUser(UserEntity user);
 
-    public UserEntityDto createUser(String name, String email, String password, List<Topic> topics);
-
-    public UserEntityDto login(String email, String password);
+    public UserEntity findUserByEmail(LoginRequest loginRequest);
 
     public UserEntity findById(Long id);
 
-    public UserEntityDto updateUser(Long id, String name, String email, String password, List<Topic> topics);
+    public UserEntity updateUser(Long id, String name, String email, String password);
 
     // public void subscribe(UserEntity user, Topic topic);
 
     // public void unsubscribe(UserEntity user, Topic topic);
 
-    // logout
 }

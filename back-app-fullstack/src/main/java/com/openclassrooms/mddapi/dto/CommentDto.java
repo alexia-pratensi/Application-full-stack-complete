@@ -5,7 +5,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import com.openclassrooms.mddapi.models.UserEntity;
 import java.time.LocalDateTime;
 import java.util.Date;
 
@@ -23,7 +22,10 @@ public class CommentDto {
 	private String content;
 
 	@NotBlank
-	private UserEntity user;
+	private Long post_id;
+
+	@NotBlank
+	private Long user_id;
 
 	private LocalDateTime created_at;
 

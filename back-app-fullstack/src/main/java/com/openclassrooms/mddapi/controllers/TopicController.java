@@ -7,11 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.openclassrooms.mddapi.dto.TopicDto;
-import com.openclassrooms.mddapi.mappers.TopicMapper;
 import com.openclassrooms.mddapi.models.Topic;
-import com.openclassrooms.mddapi.repositories.TopicRepository;
 import com.openclassrooms.mddapi.services.TopicService;
 
 import java.util.List;
@@ -23,9 +19,6 @@ public class TopicController {
 
     @Autowired
     private TopicService topicService;
-
-    // @Autowired
-    // private TopicMapper topicMapper;
 
     @GetMapping
     public ResponseEntity<?> getAllTopics() {
@@ -39,8 +32,7 @@ public class TopicController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> findTopicById(@PathVariable Long id) { // Utilisez @PathVariable pour obtenir l'ID depuis
-                                                                    // l'URL
+    public ResponseEntity<?> findTopicById(@PathVariable Long id) {
         try {
             Topic topic = topicService.findById(id);
             // TopicDto topicDto = topicMapper.toDto(topic);

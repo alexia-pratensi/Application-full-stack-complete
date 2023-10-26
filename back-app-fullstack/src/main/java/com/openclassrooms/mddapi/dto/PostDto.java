@@ -1,11 +1,7 @@
 package com.openclassrooms.mddapi.dto;
 
-import java.util.List;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import com.openclassrooms.mddapi.models.Comment;
-import com.openclassrooms.mddapi.models.Topic;
-import com.openclassrooms.mddapi.models.UserEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,19 +19,14 @@ public class PostDto {
 	@Size(max = 50)
 	private String title;
 
-	@NotBlank
-	private UserEntity User;
-
-	@NotBlank
-	private Date Date;
+	private Long user_id;
 
 	@NotBlank
 	private String content;
 
-	@NotBlank
-	private Topic topic;
+	private Date date;
 
-	private List<Comment> comments;
+	private Long topic_id;
 
 	private LocalDateTime created_at;
 

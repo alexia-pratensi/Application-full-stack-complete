@@ -44,7 +44,6 @@ public class Comment {
 	@NotBlank
 	private String content;
 
-	@NotBlank
 	@ManyToOne
 	@JoinColumn(name = "user_id", referencedColumnName = "id")
 	private UserEntity user;
