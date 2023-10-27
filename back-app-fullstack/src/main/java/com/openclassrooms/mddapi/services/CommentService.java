@@ -5,7 +5,7 @@ import com.openclassrooms.mddapi.dto.CommentDto;
 
 public interface CommentService {
 
-    public CommentDto createComment(CommentDto comment);
+    public void createComment(CommentDto comment, Long postId);
 
     public List<CommentDto> getAllComments();
 

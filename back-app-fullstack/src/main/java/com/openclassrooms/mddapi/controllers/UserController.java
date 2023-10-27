@@ -42,8 +42,8 @@ public class UserController {
             if (userDto == null) {
                 throw new Exception("User is null");
             }
-            userService.createUser(userDto);
-            return ResponseEntity.ok(userDto);
+            UserEntityDto createdUser = userService.createUser(userDto);
+            return ResponseEntity.ok(createdUser);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Error: " + e.getMessage());
         }

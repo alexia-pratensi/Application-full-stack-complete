@@ -6,7 +6,9 @@ import java.util.ArrayList;
 import java.util.List;
 import com.openclassrooms.mddapi.dto.CommentDto;
 import com.openclassrooms.mddapi.models.Comment;
+import com.openclassrooms.mddapi.models.Post;
 import com.openclassrooms.mddapi.repositories.CommentRepository;
+import com.openclassrooms.mddapi.repositories.PostRepository;
 import com.openclassrooms.mddapi.services.CommentService;
 import com.openclassrooms.mddapi.transformers.CommentTransformer;
 
@@ -19,16 +21,20 @@ public class CommentServiceImpl implements CommentService {
     @Autowired
     private CommentTransformer commentTransformer;
 
+    @Autowired
+    private PostRepository postRepository;
+
     @Override
-    public CommentDto createComment(CommentDto commentDto) {
+    public void createComment(CommentDto commentDto, Long postId) {
+        Post post = postRepository.findById(postId).get();
+
         Comment comment = new Comment();
         comment.setContent(commentDto.getContent());
         comment.setDate(commentDto.getDate());
-        // comment.setPost(commentTransformer.dtoToEntity(commentDto).getPost());
         comment.setUser(commentTransformer.dtoToEntity(commentDto).getUser());
 
-        Comment commentCreated = commentRepository.save(comment);
-        return commentTransformer.entityToDto(commentCreated);
+        post.getComments().add(comment);
+        postRepository.save(post);
     }
 
     @Override

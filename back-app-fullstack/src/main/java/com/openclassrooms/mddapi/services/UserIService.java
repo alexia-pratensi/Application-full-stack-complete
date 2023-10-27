@@ -17,4 +17,6 @@ public interface UserIService {
 
     public void unsubscribe(Long id, Long topicDtoId);
 
+    // logout
+
 }
