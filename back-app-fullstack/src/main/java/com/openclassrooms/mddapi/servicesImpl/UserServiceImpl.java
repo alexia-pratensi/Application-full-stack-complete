@@ -27,7 +27,6 @@ public class UserServiceImpl implements UserIService {
     @Override
     public UserEntityDto createUser(UserEntityDto userDto) {
         UserEntity user = new UserEntity();
-        user.setId(userDto.getId());
         user.setName(userDto.getName());
         user.setEmail(userDto.getEmail());
         user.setPassword(userDto.getPassword());
