@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import com.openclassrooms.mddapi.models.Post;
+import com.openclassrooms.mddapi.dto.PostDto;
 import com.openclassrooms.mddapi.servicesImpl.PostServiceImpl;
 import java.util.List;
 
@@ -24,7 +24,7 @@ public class PostController {
     @GetMapping
     public ResponseEntity<?> getAllPosts() {
         try {
-            List<Post> posts = postService.getAllPosts();
+            List<PostDto> posts = postService.getAllPosts();
             return ResponseEntity.ok().body(posts);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Error: " + e.getMessage());
@@ -32,7 +32,7 @@ public class PostController {
     }
 
     @PostMapping
-    public ResponseEntity<?> createPost(@RequestBody Post post) {
+    public ResponseEntity<?> createPost(@RequestBody PostDto post) {
         try {
             this.postService.createPost(post);
             return ResponseEntity.ok("Post created!");
@@ -47,7 +47,7 @@ public class PostController {
             if (id == null || id == 0) {
                 throw new Exception("Post id is null or 0");
             }
-            Post post = postService.getPostById(id);
+            PostDto post = postService.getPostById(id);
             return ResponseEntity.ok(post);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Error: " + e.getMessage());

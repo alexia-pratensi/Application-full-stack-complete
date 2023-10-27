@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import com.openclassrooms.mddapi.models.Topic;
+import com.openclassrooms.mddapi.dto.TopicDto;
 import com.openclassrooms.mddapi.services.TopicService;
 
 import java.util.List;
@@ -23,8 +23,7 @@ public class TopicController {
     @GetMapping
     public ResponseEntity<?> getAllTopics() {
         try {
-            List<Topic> topics = topicService.getAllTopics();
-            // List<TopicDto> topicDtos = topicMapper.toDto(topics);
+            List<TopicDto> topics = topicService.getAllTopics();
             return ResponseEntity.ok().body(topics);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Error: " + e.getMessage());
@@ -34,8 +33,7 @@ public class TopicController {
     @GetMapping("/{id}")
     public ResponseEntity<?> findTopicById(@PathVariable Long id) {
         try {
-            Topic topic = topicService.findById(id);
-            // TopicDto topicDto = topicMapper.toDto(topic);
+            TopicDto topic = topicService.findById(id);
             return ResponseEntity.ok().body(topic);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Error: " + e.getMessage());
