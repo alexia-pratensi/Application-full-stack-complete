@@ -1,14 +1,14 @@
 package com.openclassrooms.mddapi.services;
 
 import java.util.List;
-import com.openclassrooms.mddapi.models.Post;
+import com.openclassrooms.mddapi.dto.PostDto;
 
 public interface PostService {
 
-    public Post createPost(Post post);
+    public PostDto createPost(PostDto post);
 
-    public Post getPostById(Long id);
+    public PostDto getPostById(Long id);
 
-    public List<Post> getAllPosts();
+    public List<PostDto> getAllPosts();
 
 }

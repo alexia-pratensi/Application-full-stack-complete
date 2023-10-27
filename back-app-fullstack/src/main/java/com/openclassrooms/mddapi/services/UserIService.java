@@ -1,20 +1,20 @@
 package com.openclassrooms.mddapi.services;
 
-import com.openclassrooms.mddapi.models.UserEntity;
 import com.openclassrooms.mddapi.dto.LoginRequest;
+import com.openclassrooms.mddapi.dto.UserEntityDto;
 
 public interface UserIService {
 
-    public UserEntity createUser(UserEntity user);
+    public UserEntityDto createUser(UserEntityDto user);
 
-    public UserEntity findUserByEmail(LoginRequest loginRequest);
+    public UserEntityDto findUserByEmail(LoginRequest loginRequest);
 
-    public UserEntity findById(Long id);
+    public UserEntityDto findById(Long id);
 
-    public UserEntity updateUser(Long id, String name, String email, String password);
+    public UserEntityDto updateUser(Long id, String name, String email, String password);
 
-    // public void subscribe(UserEntity user, Topic topic);
+    public void subscribe(Long id, Long topicDtoId);
 
-    // public void unsubscribe(UserEntity user, Topic topic);
+    public void unsubscribe(Long id, Long topicDtoId);
 
 }

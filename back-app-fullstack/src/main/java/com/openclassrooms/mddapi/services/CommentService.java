@@ -1,12 +1,12 @@
 package com.openclassrooms.mddapi.services;
 
 import java.util.List;
-import com.openclassrooms.mddapi.models.Comment;
+import com.openclassrooms.mddapi.dto.CommentDto;
 
 public interface CommentService {
 
-    public Comment createComment(Comment comment);
+    public CommentDto createComment(CommentDto comment);
 
-    public List<Comment> getAllComments();
+    public List<CommentDto> getAllComments();
 
 }

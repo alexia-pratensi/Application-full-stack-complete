@@ -5,7 +5,6 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -17,8 +16,7 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
+// import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -47,6 +45,11 @@ public class Comment {
 	@ManyToOne
 	@JoinColumn(name = "user_id", referencedColumnName = "id")
 	private UserEntity user;
+
+	// @JsonIgnore
+	// @ManyToOne
+	// @JoinColumn(name = "post_id", referencedColumnName = "id")
+	// private Post post;
 
 	@CreatedDate
 	@Column(name = "created_at", updatable = false)

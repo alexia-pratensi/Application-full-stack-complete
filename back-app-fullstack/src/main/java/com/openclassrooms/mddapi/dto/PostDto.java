@@ -2,10 +2,11 @@ package com.openclassrooms.mddapi.dto;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data
@@ -19,16 +20,15 @@ public class PostDto {
 	@Size(max = 50)
 	private String title;
 
-	private Long user_id;
+	private UserEntityDto user_id;
+
+	private Date date;
 
 	@NotBlank
 	private String content;
 
-	private Date date;
-
 	private Long topic_id;
 
-	private LocalDateTime created_at;
+	private List<CommentDto> comments = new ArrayList<>();
 
-	private LocalDateTime updated_at;
 }

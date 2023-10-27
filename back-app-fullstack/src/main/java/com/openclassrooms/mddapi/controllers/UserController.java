@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.openclassrooms.mddapi.dto.LoginRequest;
+import com.openclassrooms.mddapi.dto.UserEntityDto;
 import com.openclassrooms.mddapi.dto.UserUpdateRequest;
-import com.openclassrooms.mddapi.models.UserEntity;
 import com.openclassrooms.mddapi.servicesImpl.UserServiceImpl;
 
 @RestController
@@ -28,7 +28,7 @@ public class UserController {
     public ResponseEntity<?> login(@Valid @RequestBody LoginRequest loginRequest) {
         try {
 
-            UserEntity user = userService.findUserByEmail(loginRequest);
+            UserEntityDto user = userService.findUserByEmail(loginRequest);
 
             return ResponseEntity.ok(user);
         } catch (Exception e) {
@@ -37,13 +37,13 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody UserEntity user) {
+    public ResponseEntity<?> register(@RequestBody UserEntityDto userDto) {
         try {
-            if (user == null) {
+            if (userDto == null) {
                 throw new Exception("User is null");
             }
-            userService.createUser(user);
-            return ResponseEntity.ok(user);
+            userService.createUser(userDto);
+            return ResponseEntity.ok(userDto);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Error: " + e.getMessage());
         }
@@ -56,7 +56,8 @@ public class UserController {
                 throw new Exception("User id is null or 0");
             }
 
-            UserEntity user = userService.updateUser(id, request.getName(), request.getEmail(), request.getPassword());
+            UserEntityDto user = userService.updateUser(id, request.getName(), request.getEmail(),
+                    request.getPassword());
 
             return ResponseEntity.ok(user);
         } catch (Exception e) {
@@ -71,7 +72,7 @@ public class UserController {
                 throw new Exception("User id is null or 0");
             }
 
-            UserEntity user = userService.findById(id);
+            UserEntityDto user = userService.findById(id);
 
             return ResponseEntity.ok().body(user);
         } catch (Exception e) {
@@ -79,40 +80,40 @@ public class UserController {
         }
     }
 
+    @PostMapping("/{id}/subscribe/{topicId}")
+    public ResponseEntity<?> subscribe(@PathVariable Long id, @PathVariable Long topicId) {
+        try {
+            if (id == null || id == 0) {
+                throw new Exception("User id is null or 0");
+            }
+            if (topicId == null || topicId == 0) {
+                throw new Exception("Topic id is null or 0");
+            }
+
+            userService.subscribe(id, topicId);
+
+            return ResponseEntity.ok("User subscribed to topic");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Error: " + e.getMessage());
+        }
+    }
+
+    @PostMapping("/{id}/unsubscribe/{topicId}")
+    public ResponseEntity<?> unsubscribe(@PathVariable Long id, @PathVariable Long topicId) {
+        try {
+            if (id == null || id == 0) {
+                throw new Exception("User id is null or 0");
+            }
+            if (topicId == null || topicId == 0) {
+                throw new Exception("Topic id is null or 0");
+            }
+
+            userService.unsubscribe(id, topicId);
+
+            return ResponseEntity.ok("User unsubscribed to topic");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Error: " + e.getMessage());
+        }
+    }
+
 }
-
-// @PostMapping("/subscribe")
-// public ResponseEntity<?> subscribe(UserEntity user, Topic topic) {
-// try {
-// if (user == null) {
-// throw new Exception("User is null");
-// }
-// if (topic == null) {
-// throw new Exception("Topic is null");
-// }
-
-// userService.subscribe(user, topic);
-
-// return ResponseEntity.ok("User subscribed to topic");
-// } catch (Exception e) {
-// return ResponseEntity.badRequest().body("Error: " + e.getMessage());
-// }
-// }
-
-// @PostMapping("/unsubscribe")
-// public ResponseEntity<?> unsubscribe(UserEntity user, Topic topic) {
-// try {
-// if (user == null) {
-// throw new Exception("User is null");
-// }
-// if (topic == null) {
-// throw new Exception("Topic is null");
-// }
-
-// userService.unsubscribe(user, topic);
-
-// return ResponseEntity.ok("User unsubscribed to topic");
-// } catch (Exception e) {
-// return ResponseEntity.badRequest().body("Error: " + e.getMessage());
-// }
-// }

@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import com.openclassrooms.mddapi.models.Comment;
+import com.openclassrooms.mddapi.dto.CommentDto;
 import com.openclassrooms.mddapi.servicesImpl.CommentServiceImpl;
 
 @RestController
@@ -20,9 +20,9 @@ public class CommentController {
     private CommentServiceImpl commentService;
 
     @PostMapping
-    public ResponseEntity<?> createComment(@RequestBody Comment comment) {
+    public ResponseEntity<?> createComment(@RequestBody CommentDto commentDto) {
         try {
-            this.commentService.createComment(comment);
+            this.commentService.createComment(commentDto);
             return ResponseEntity.ok("Comment created!");
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Error: " + e.getMessage());
