@@ -20,14 +20,14 @@ public class PostDto {
 	@Size(max = 50)
 	private String title;
 
-	private UserEntityDto user_id;
+	private UserEntityDto user;
 
 	private Date date;
 
 	@NotBlank
 	private String content;
 
-	private Long topic_id;
+	private TopicDto topic;
 
 	private List<CommentDto> comments = new ArrayList<>();
 

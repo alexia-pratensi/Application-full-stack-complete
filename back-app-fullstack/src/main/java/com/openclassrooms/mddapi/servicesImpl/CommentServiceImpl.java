@@ -7,16 +7,12 @@ import java.util.List;
 import com.openclassrooms.mddapi.dto.CommentDto;
 import com.openclassrooms.mddapi.models.Comment;
 import com.openclassrooms.mddapi.models.Post;
-import com.openclassrooms.mddapi.repositories.CommentRepository;
 import com.openclassrooms.mddapi.repositories.PostRepository;
 import com.openclassrooms.mddapi.services.CommentService;
 import com.openclassrooms.mddapi.transformers.CommentTransformer;
 
 @Service
 public class CommentServiceImpl implements CommentService {
-
-    @Autowired
-    private CommentRepository commentRepository;
 
     @Autowired
     private CommentTransformer commentTransformer;
@@ -38,8 +34,9 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public List<CommentDto> getAllComments() {
-        List<Comment> comments = commentRepository.findAll();
+    public List<CommentDto> getAllComments(Long postId) {
+        Post post = postRepository.findById(postId).get();
+        List<Comment> comments = post.getComments();
 
         if (!comments.isEmpty()) {
             return comments.stream().map(comment -> commentTransformer.entityToDto(comment))

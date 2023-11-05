@@ -3,7 +3,6 @@ package com.openclassrooms.mddapi.servicesImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.openclassrooms.mddapi.dto.LoginRequest;
-import com.openclassrooms.mddapi.dto.TopicDto;
 import com.openclassrooms.mddapi.dto.UserEntityDto;
 import com.openclassrooms.mddapi.models.Topic;
 import com.openclassrooms.mddapi.models.UserEntity;

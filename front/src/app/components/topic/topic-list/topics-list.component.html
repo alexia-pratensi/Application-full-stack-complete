@@ -1,0 +1,29 @@
+<p>topic-list works!</p>
+<div class="list">
+    <mat-card>
+      <mat-card-header fxLayout="row" fxLayoutAlign="space-between center">
+        <mat-card-title class="m0">MDD</mat-card-title>
+      </mat-card-header>
+      <div class="items mt2" fxLayout="row wrap" fxLayout.lt-md="column">
+        <mat-card class="item" *ngFor="let topic of (topics$ | async)" fxFlex>
+          <mat-card-header>
+            <mat-card-title>{{ topic.title }}</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+              {{ topic.description }}
+          </mat-card-content>
+          <button *ngIf="!isSubscribed(topic)" mat-raised-button color="primary" (click)="subscribe(topic)">
+            <mat-icon>person_add</mat-icon>
+            <span class="ml1">s'abonner</span>
+          </button>
+          <button *ngIf="isSubscribed(topic)" mat-raised-button color="warn" (click)="unSubscribe(topic)">
+            <mat-icon>person_remove</mat-icon>
+            <span class="ml1">se desabonner</span>
+          </button>
+        </mat-card>
+      </div>
+    </mat-card>
+  </div>
+
+  
+  

@@ -11,6 +11,8 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {}
 
   start() {
-    alert('Commencez par lire le README et à vous de jouer !');
+    //redirect to the register page on click
+    window.location.href = '/register';
+
   }
 }

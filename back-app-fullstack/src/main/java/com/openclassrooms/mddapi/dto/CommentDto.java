@@ -21,8 +21,6 @@ public class CommentDto {
 	private String content;
 
 	@NotBlank
-	private UserEntityDto user_id;
+	private UserEntityDto user;
 
-	// @NotBlank
-	// private PostDto post_id;
 }

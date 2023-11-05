@@ -9,7 +9,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.openclassrooms.mddapi.dto.CommentDto;
 import com.openclassrooms.mddapi.dto.PostDto;
+import com.openclassrooms.mddapi.dto.ResponseRequest;
+import com.openclassrooms.mddapi.servicesImpl.CommentServiceImpl;
 import com.openclassrooms.mddapi.servicesImpl.PostServiceImpl;
 import java.util.List;
 
@@ -20,6 +24,9 @@ public class PostController {
 
     @Autowired
     private PostServiceImpl postService;
+
+    @Autowired
+    private CommentServiceImpl commentService;
 
     @GetMapping
     public ResponseEntity<?> getAllPosts() {
@@ -35,7 +42,8 @@ public class PostController {
     public ResponseEntity<?> createPost(@RequestBody PostDto post) {
         try {
             this.postService.createPost(post);
-            return ResponseEntity.ok("Post created!");
+            ResponseRequest response = new ResponseRequest("Post created!");
+            return ResponseEntity.ok(response);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Error: " + e.getMessage());
         }
@@ -53,4 +61,26 @@ public class PostController {
             return ResponseEntity.badRequest().body("Error: " + e.getMessage());
         }
     }
+
+    @PostMapping("/{postId}/comments")
+    public ResponseEntity<?> createComment(@RequestBody CommentDto commentDto, @PathVariable Long postId) {
+        try {
+
+            this.commentService.createComment(commentDto, postId);
+            ResponseRequest response = new ResponseRequest("Comment created!");
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Error: " + e.getMessage());
+        }
+    }
+
+    @GetMapping("/{postId}/comments")
+    public ResponseEntity<?> getAllComments(@PathVariable Long postId) {
+        try {
+            return ResponseEntity.ok().body(commentService.getAllComments(postId));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Error: " + e.getMessage());
+        }
+    }
+
 }

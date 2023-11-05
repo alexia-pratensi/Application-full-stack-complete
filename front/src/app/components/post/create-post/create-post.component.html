@@ -1,0 +1,40 @@
+<p>create-post works!</p>
+<div class="create m3">
+    <mat-card>
+      <mat-card-title>
+        <div fxLayout="row" fxLayoutAlign="start center">
+          <button mat-icon-button routerLink="/posts">
+            <mat-icon>arrow_back</mat-icon>
+          </button>
+          <h1>Create session</h1>
+
+        </div>
+      </mat-card-title>
+      <mat-card-content *ngIf="postForm">
+        <form class="mt2" fxLayout="column" [formGroup]="postForm" (ngSubmit)="onSubmitPost()">
+            <mat-form-field appearance="outline">
+                <mat-label>Selectionner un thème</mat-label>
+                <mat-select ngDefaultControl formControlName="topic">
+                <mat-option *ngFor="let topic of topics$ | async" [value]="topic">
+                    {{topic.title}} 
+                </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="" fxFlex>
+                <mat-label>Titre de l'article</mat-label>
+                <input matInput formControlName="title">
+            </mat-form-field>
+            <mat-form-field appearance="outline" fxFlex>
+                <mat-label>contenu de l'article</mat-label>
+                <textarea matInput rows="8" formControlName="content"></textarea>
+            </mat-form-field>
+          <div fxLayout="row" fxLayoutAlign="center center">
+            <button mat-raised-button color="primary" type="submit" [disabled]="postForm.invalid">
+                Créer
+            </button>
+          </div>
+        </form>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  
