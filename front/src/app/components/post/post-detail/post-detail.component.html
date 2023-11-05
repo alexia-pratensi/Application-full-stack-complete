@@ -1,0 +1,104 @@
+
+<!-- <p>helllllllllllllloooooooo</p>
+<div *ngIf="post$ | async as post">
+  <h2>{{ post.title }}</h2>
+  <p>Posted by: {{ post.user.name }}</p>
+  <p>Topic: {{ post.topicId }}</p>
+  <p>Content: {{ post.content }}</p>
+  <p>Created at: {{ post.createdAt | date }}</p>
+  <p>Updated at: {{ post.updatedAt | date }}</p>
+
+  <h3>Comments</h3>
+  <ul>
+    <li *ngFor="let comment of post.comments">
+       {{ comment.text }} -->
+      <!-- Add more comment properties here if needed -->
+    <!-- </li>
+  </ul>
+</div> --> 
+<div class="container flex">
+    <mat-card *ngIf="post$ ">
+      <div class="">
+        <mat-card-header>
+          <mat-card-title>
+            <div class="flex p-10 items-center">
+              <div class="flex  col-span-1">
+                <button mat-icon-button (click)="back()">
+                  <mat-icon>arrow_back</mat-icon>
+                </button>
+              </div>
+              <div class="flex col-span-2">
+                <div class="m-0" >{{ post.title }}</div>
+              </div>
+            </div>
+          </mat-card-title>
+          <mat-card-subtitle>
+            <span>......................................................</span>
+            <!-- <div class="grid grid-cols-3 gap-10"> -->
+              <div>author: {{post.user.name }}</div>
+              <div>Date: {{post.date| date:'dd/MM/yyyy'}}</div>
+              <div>topic: {{post.topic.title}}</div>
+            <!-- </div> -->
+            <span>......................................................</span>
+          </mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <p>{{post.content}}</p>
+          <!-- <mat-divider [inset]="true" class="m-4"></mat-divider> -->
+          <div>
+            <h2>Commentaires</h2>
+            <div *ngFor="let comment of post.comments" class="grid grid-cols-7 gap-4 m-5">
+              <div class="flex justify-end">{{comment.date }}</div>
+              <div class="flex justify-center content-center comment col-span-5">
+                <div>
+                    {{comment.user.name}}
+                  </div>
+                <div>
+                  {{comment.content}}
+                </div>
+                <div>
+                  <!-- <mat-divider></mat-divider> -->
+                </div>
+              </div>
+            </div>
+         
+            <p>................................</p>
+              <p>{{username}}</p>
+              <p>................................</p>
+          <mat-card-content *ngIf="commentForm">
+            <form class="mt2" fxLayout="column" [formGroup]="commentForm" (ngSubmit)="onSubmitComment()">
+                <mat-form-field appearance="outline" fxFlex>
+                    <mat-label>Description</mat-label>
+                    <textarea matInput rows="8" formControlName="content"></textarea>
+                </mat-form-field>
+              <div fxLayout="row" fxLayoutAlign="center center">
+                <button mat-raised-button color="primary" type="submit" [disabled]="commentForm.invalid">
+                    Créer
+                </button>
+              </div>
+            </form>
+          </mat-card-content>
+          <!-- </div>
+           <div>
+            <div *ngIf="user">
+              <h2>Ajouter un commentaire</h2>
+              <form class="grid grid-cols-5 gap-4 m-7" [formGroup]="form" (ngSubmit)="postComment(form)">
+                <div></div>
+                <div class="flex justify-center content-center col-span-3">
+                  <mat-form-field appearance="outline" color="primary">
+                    <mat-label>Ecrivez ici votre commentaire</mat-label>
+                    <input matInput formControlName="content" placeholder="Commentaire">
+                  </mat-form-field>
+                </div>
+                <div class="flex justify-center content-center" mat-dialog-actions>
+                  <button mat-raised-button color="primary" type="submit">
+                    <mat-icon (click)="postComment(form)">send</mat-icon>
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </mat-card-content>
+      </div>
+    </mat-card>
+  </div> -->

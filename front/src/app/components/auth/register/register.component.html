@@ -1,0 +1,32 @@
+<div class="register" fxLayout="row" fxLayoutAlign="center center">
+    <mat-card>
+        <mat-card-header fxLayoutAlign="center center">
+            <mat-card-title>Register</mat-card-title>
+        </mat-card-header>
+        <form class="register-form" [formGroup]="formRegister" (ngSubmit)="submit()">
+            <mat-card-content fxLayout="column">
+                <mat-form-field fxFlex>
+                    <input matInput placeholder="Nom d'utilisateur" formControlName="name">
+                </mat-form-field>
+            
+                <mat-form-field fxFlex>
+                    <input matInput placeholder="Email" formControlName="email">
+                </mat-form-field>
+                <mat-form-field fxFlex>
+                    <input matInput [type]="hide ? 'password' : 'text'" placeholder="Password"
+                    formControlName="password">
+                    <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                    [attr.aria-pressed]="hide">
+                    <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </button>
+            </mat-form-field>
+
+                <div *ngIf="formRegister?.get('password')?.hasError('minlength')">Le mot de passe doit contenir au moins 8 caractères</div>
+                <div *ngIf="formRegister?.get('password')?.hasError('invalidPassword')">Le mot de passe doit contenir au moins un chiffre, une lettre majuscule, une lettre minuscule et un caractère spécial</div>
+            </mat-card-content>
+            <button mat-raised-button color="primary" type="submit" [disabled]="formRegister.invalid">Submit</button>
+            <span *ngIf="onError" class="error ml2">An error occurred</span>
+        </form>
+    </mat-card>
+</div>
+  

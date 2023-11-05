@@ -1,0 +1,82 @@
+<p>me works!</p>
+<div class="m3">
+    <mat-card>
+      <mat-card-title>
+        <div fxLayout="row" fxLayoutAlign="start center">
+          <button mat-icon-button (click)="back()">
+            <mat-icon>arrow_back</mat-icon>
+          </button>
+          <h1>User information</h1>
+        </div>
+      </mat-card-title>
+      <mat-card-content>
+
+
+
+
+    <mat-card-content *ngIf=" userForm">
+        <form class="mt2" fxLayout="column" [formGroup]=" userForm" (ngSubmit)="onSubmitUser(user)">
+          <mat-form-field appearance="outline" class="" fxFlex>
+            <!-- <mat-label>{{user.name}}</mat-label> -->
+            <input matInput formControlName="name">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="" fxFlex>
+            <!-- <mat-label>{{user.email}}</mat-label> -->
+            <input matInput formControlName="email" value={{user.email}}>
+          </mat-form-field>
+
+          
+          <mat-form-field appearance="outline" class="" fxFlex>
+            <!-- <mat-label>{{user.password}}</mat-label> -->
+            <input matInput formControlName="password" type="password" value={{user.password}}>
+          </mat-form-field>
+
+          <div fxLayout="row" fxLayoutAlign="center center">
+            <button mat-raised-button color="primary" type="submit" [disabled]="userForm.invalid">
+                Sauvegarder
+            </button>
+          </div>
+        </form>
+
+          <div fxLayout="column" class="my2" fxLayoutAlign="center center">
+            <p>Delete my account:</p>
+            <button mat-raised-button color="warn" (click)="logout()">
+              
+              <span class="ml1">se déconnecter</span>
+            </button>
+          </div>
+          
+      
+    </mat-card-content>
+
+
+
+  <!-- display les topics de user -->
+  <div class="m3">
+    <mat-card>
+      <mat-card-title>
+        <div fxLayout="row" fxLayoutAlign="start center">
+          <h1>My topics</h1>
+        </div>
+      </mat-card-title>
+      <mat-card-content>
+        <div *ngIf="user" fxLayout="column" fxLayoutAlign="start center">
+          <div *ngFor="let topic of (topicsFiltered$ | async)" fxLayout="row" fxLayoutAlign="start center">
+            <p>Title: {{ topic.title }} </p>
+            <p>Content: {{ topic.description }}</p>
+            <button  mat-raised-button color="warn" (click)="unSubscribe(topic,user)">
+              <mat-icon>person_remove</mat-icon>
+              <span class="ml1">se desabonner</span>
+            </button>
+          </div>
+        </div>
+        <div *ngIf="(topicsFiltered$ | async)?.length === 0" fxLayout="column" fxLayoutAlign="center center">
+          <p>No topics yet</p>
+        </div>
+      </mat-card-content>
+    
+    </mat-card>
+  </div>
+        
+  

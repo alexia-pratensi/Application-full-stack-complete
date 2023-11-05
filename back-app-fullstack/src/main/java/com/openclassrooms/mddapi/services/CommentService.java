@@ -7,6 +7,6 @@ public interface CommentService {
 
     public void createComment(CommentDto comment, Long postId);
 
-    public List<CommentDto> getAllComments();
+    public List<CommentDto> getAllComments(Long postId);
 
 }

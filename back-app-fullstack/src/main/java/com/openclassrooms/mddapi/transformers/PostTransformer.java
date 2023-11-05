@@ -36,7 +36,7 @@ public class PostTransformer {
         userDto.setEmail(post.getUser().getEmail());
         userDto.setPassword(post.getUser().getPassword());
 
-        pDTO.setUser_id(userDto);
+        pDTO.setUser(userDto);
 
         if (withComments) {
             List<CommentDto> commentDtos = new ArrayList<>();
@@ -49,7 +49,7 @@ public class PostTransformer {
 
         TopicDto topicDto = new TopicTransformer().entityToDto(post.getTopic(),
                 false);
-        pDTO.setTopic_id(topicDto.getId());
+        pDTO.setTopic(topicDto);
 
         return pDTO;
     }
@@ -66,10 +66,10 @@ public class PostTransformer {
         postEntity.setContent(postDto.getContent());
 
         UserEntity user = new UserEntity();
-        user.setId(postDto.getUser_id().getId());
-        user.setName(postDto.getUser_id().getName());
-        user.setEmail(postDto.getUser_id().getEmail());
-        user.setPassword(postDto.getUser_id().getPassword());
+        user.setId(postDto.getUser().getId());
+        user.setName(postDto.getUser().getName());
+        user.setEmail(postDto.getUser().getEmail());
+        user.setPassword(postDto.getUser().getPassword());
 
         postEntity.setUser(user);
 
@@ -80,7 +80,7 @@ public class PostTransformer {
                 comments.add(commentEntity);
             }
         }
-        Topic topic = topicRepository.findById(postDto.getTopic_id()).get();
+        Topic topic = topicRepository.findById(postDto.getTopic().getId()).get();
         postEntity.setTopic(topic);
 
         return postEntity;

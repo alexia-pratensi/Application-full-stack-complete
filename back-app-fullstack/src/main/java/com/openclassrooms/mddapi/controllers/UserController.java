@@ -4,6 +4,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.openclassrooms.mddapi.dto.LoginRequest;
+import com.openclassrooms.mddapi.dto.ResponseRequest;
 import com.openclassrooms.mddapi.dto.UserEntityDto;
 import com.openclassrooms.mddapi.dto.UserUpdateRequest;
 import com.openclassrooms.mddapi.servicesImpl.UserServiceImpl;
@@ -92,13 +94,15 @@ public class UserController {
 
             userService.subscribe(id, topicId);
 
-            return ResponseEntity.ok("User subscribed to topic");
+            // return a response entity with a message (ResponseRequest.java)
+            ResponseRequest response = new ResponseRequest("User subscribed to topic");
+            return ResponseEntity.ok(response);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Error: " + e.getMessage());
         }
     }
 
-    @PostMapping("/{id}/unsubscribe/{topicId}")
+    @DeleteMapping("/{id}/unsubscribe/{topicId}")
     public ResponseEntity<?> unsubscribe(@PathVariable Long id, @PathVariable Long topicId) {
         try {
             if (id == null || id == 0) {
@@ -110,7 +114,8 @@ public class UserController {
 
             userService.unsubscribe(id, topicId);
 
-            return ResponseEntity.ok("User unsubscribed to topic");
+            ResponseRequest response = new ResponseRequest("User unsubscribed from topic");
+            return ResponseEntity.ok(response);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Error: " + e.getMessage());
         }
