@@ -1,5 +1,6 @@
 package com.openclassrooms.mddapi.servicesImpl;
 
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.openclassrooms.mddapi.dto.LoginRequest;
@@ -36,10 +37,11 @@ public class UserServiceImpl implements UserIService {
 
     @Override
     public UserEntityDto findUserByEmail(LoginRequest loginRequest) {
-        UserEntity user = userRepository.findByEmail(loginRequest.getEmail());
-        if (user == null) {
+        Optional<UserEntity> optionalUser = userRepository.findByEmail(loginRequest.getEmail());
+        if (!optionalUser.isPresent()) {
             throw new RuntimeException("User not found");
         }
+        UserEntity user = optionalUser.get();
         if (!user.getPassword().equals(loginRequest.getPassword())) {
             throw new RuntimeException("Password is incorrect");
         }
