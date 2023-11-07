@@ -14,7 +14,6 @@ export class MeService {
 
     public user: User | undefined;
   
-    
       constructor(private userApiService: UserApiService,
                 private sessionService: SessionService) { }
 

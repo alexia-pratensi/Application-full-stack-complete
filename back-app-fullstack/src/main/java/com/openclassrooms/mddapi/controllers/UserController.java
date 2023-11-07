@@ -1,8 +1,15 @@
 package com.openclassrooms.mddapi.controllers;
 
+import java.util.Optional;
+
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,8 +21,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.openclassrooms.mddapi.dto.LoginRequest;
 import com.openclassrooms.mddapi.dto.ResponseRequest;
+import com.openclassrooms.mddapi.dto.SignupRequest;
 import com.openclassrooms.mddapi.dto.UserEntityDto;
 import com.openclassrooms.mddapi.dto.UserUpdateRequest;
+import com.openclassrooms.mddapi.models.UserEntity;
+import com.openclassrooms.mddapi.payload.response.JwtResponse;
+import com.openclassrooms.mddapi.repositories.UserIRepository;
+import com.openclassrooms.mddapi.security.jwt.JwtUtils;
+import com.openclassrooms.mddapi.security.services.UserDetailsImpl;
 import com.openclassrooms.mddapi.servicesImpl.UserServiceImpl;
 
 @RestController
@@ -26,29 +39,60 @@ public class UserController {
     @Autowired
     private UserServiceImpl userService;
 
+    @Autowired
+    AuthenticationManager authenticationManager;
+
+    @Autowired
+    JwtUtils jwtUtils;
+
+    @Autowired
+    PasswordEncoder passwordEncoder;
+
+    @Autowired
+    UserIRepository userRepository;
+
     @PostMapping("/login")
-    public ResponseEntity<?> login(@Valid @RequestBody LoginRequest loginRequest) {
-        try {
+    public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
 
-            UserEntityDto user = userService.findUserByEmail(loginRequest);
+        Optional<UserEntity> userOptional = userRepository.findByEmail(loginRequest.getEmail());
 
-            return ResponseEntity.ok(user);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body("Error: " + e.getMessage());
+        if (userOptional.isPresent()) {
+            UserEntity user = userOptional.get();
+            passwordEncoder.matches(loginRequest.getPassword(), user.getPassword());
+
         }
+
+        // If the email and password match, create and return a JWT
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
+
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        String jwt = jwtUtils.generateJwtToken(authentication);
+        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+
+        return ResponseEntity.ok(new JwtResponse(jwt,
+                userDetails.getId(),
+                userDetails.getUsername(),
+                userDetails.getName()));
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody UserEntityDto userDto) {
-        try {
-            if (userDto == null) {
-                throw new Exception("User is null");
-            }
-            UserEntityDto createdUser = userService.createUser(userDto);
-            return ResponseEntity.ok(createdUser);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body("Error: " + e.getMessage());
+    public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
+        if (userRepository.existsByEmail(signUpRequest.getEmail())) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(new ResponseRequest("Error: Email is already taken!"));
         }
+
+        // Create new user's account
+        UserEntity user = new UserEntity();
+        user.setEmail(signUpRequest.getEmail());
+        user.setName(signUpRequest.getName());
+        user.setPassword(passwordEncoder.encode(signUpRequest.getPassword()));
+
+        userRepository.save(user);
+
+        return ResponseEntity.ok(new ResponseRequest("User registered successfully!"));
     }
 
     @PutMapping("/{id}")
