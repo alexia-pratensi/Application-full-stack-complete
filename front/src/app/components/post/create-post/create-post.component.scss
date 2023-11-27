@@ -1,0 +1,43 @@
+.create-container {
+    margin: 1rem auto;
+    .arrow-back {
+        margin-left: 3rem;
+    }
+    mat-icon {
+        margin-left: 1rem;
+    }
+    .form-container {
+        display: flex;
+        flex-direction: column;
+        margin: 0 auto;
+        width: 40%;
+        h2 {
+            margin: 1rem auto;
+            font-weight: 700;
+        }
+        .field-item {
+            display: flex;
+            flex-direction: column;
+            margin: 0.5rem 0;
+        }
+        .submit-create {
+            display: flex;
+            width: fit-content;
+            margin: 2rem auto;
+            padding: 0px 2rem;
+            background-color: #7451eb;
+            color: white;
+        }
+    }
+}
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
+    color: #7451eb;
+}
+
+@media (max-width: 425px) {
+    .create-container {
+        .form-container {
+            width: 80%;
+        }
+    }
+}

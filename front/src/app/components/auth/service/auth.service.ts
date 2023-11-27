@@ -1,25 +1,25 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { RegisterRequest } from '../interface/registerRequest.interface';
-import { LoginRequest } from '../interface/loginRequest.interface';
-import { SessionInformation } from '../interface/sessionInformation.interface';
-
+import { Injectable } from "@angular/core";
 
 @Injectable({
-  providedIn: 'root'
-})
+    providedIn: 'root'
+  })
 export class AuthService {
 
-  private pathService = 'http://localhost:8080/api/users';
-
-  constructor(private httpClient: HttpClient) { }
-
-  public register(registerRequest: RegisterRequest): Observable<void> {
-    return this.httpClient.post<void>(`${this.pathService}/register`, registerRequest);
-  }
-
-  public login(loginRequest: LoginRequest): Observable<SessionInformation> {
-    return this.httpClient.post<SessionInformation>(`${this.pathService}/login`, loginRequest);
-  }
+    // Manage the password validation
+    public validatePassword(control: { value: string; }) {
+        const password = control.value;
+        if (!password) {
+            return null;
+        }
+        const hasNumber = /\d/.test(password);
+        const hasLower = /[a-z]/.test(password);
+        const hasUpper = /[A-Z]/.test(password);
+        const hasSpecial = /[!@#$%^&*]/.test(password);
+        const hasMinLength = password.length >= 8;
+        const valid = hasNumber && hasLower && hasUpper && hasSpecial && hasMinLength;
+        if (!valid) {
+            return { invalidPassword: true };
+        }
+        return null;
+    }
 }

@@ -1,1 +1,43 @@
-<router-outlet></router-outlet>
+<!-- Navbar -->
+<mat-toolbar *ngIf="!isHomePage()" [class.login-register-page]="isLoginOrRegisterPage()">
+   <div class="nav-container">
+      <div class="logo">
+        <img src="../../../assets/logo_p6.png" alt="Logo" width="100">
+      </div>
+      <div *ngIf="isTopicOrProfilOrPostPage()" class="actions">
+        <div class="links">
+          <a mat-button routerLink="/posts" routerLinkActive="active" [routerLinkActiveOptions]="{ exact:true }">Articles</a>
+          <a mat-button routerLink="/topics" routerLinkActive="active">Thèmes</a>
+        </div>
+        <div class="avatar">
+          <a mat-button routerLink="/me" routerLinkActive="active"><mat-icon>person</mat-icon></a>
+        </div>
+        <div class="mobile-menu">
+          <button mat-icon-button (click)="toggleSidebar()">
+              <mat-icon>menu</mat-icon>
+          </button>
+        </div>
+      </div>
+   </div>
+</mat-toolbar>
+<!-- Sidebar for mobile device -->
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav class="sidenav-items-container" #sidenav mode="over" position="end">
+    <ul class="sidenav-list-links">
+      <li class="sidenav-link-item">
+        <a mat-button routerLink="/posts" (click)="closeSidebar()">Articles</a>
+      </li>
+      <li class="sidenav-link-item">
+        <a mat-button routerLink="/topics" (click)="closeSidebar()">Thèmes</a>
+      </li>
+    </ul>
+    <div class="sidenav-avatar-link">
+      <a mat-button routerLink="/me" (click)="closeSidebar()"><mat-icon>person</mat-icon></a>
+    </div>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+ 
+ 

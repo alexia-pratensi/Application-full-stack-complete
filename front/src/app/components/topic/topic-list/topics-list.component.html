@@ -1,29 +1,18 @@
-<p>topic-list works!</p>
 <div class="list">
-    <mat-card>
-      <mat-card-header fxLayout="row" fxLayoutAlign="space-between center">
-        <mat-card-title class="m0">MDD</mat-card-title>
-      </mat-card-header>
-      <div class="items mt2" fxLayout="row wrap" fxLayout.lt-md="column">
-        <mat-card class="item" *ngFor="let topic of (topics$ | async)" fxFlex>
-          <mat-card-header>
-            <mat-card-title>{{ topic.title }}</mat-card-title>
-          </mat-card-header>
-          <mat-card-content>
-              {{ topic.description }}
-          </mat-card-content>
-          <button *ngIf="!isSubscribed(topic)" mat-raised-button color="primary" (click)="subscribe(topic)">
-            <mat-icon>person_add</mat-icon>
-            <span class="ml1">s'abonner</span>
-          </button>
-          <button *ngIf="isSubscribed(topic)" mat-raised-button color="warn" (click)="unSubscribe(topic)">
-            <mat-icon>person_remove</mat-icon>
-            <span class="ml1">se desabonner</span>
-          </button>
-        </mat-card>
+  <!-- Displays all topics -->
+  <div class="topic-container">
+      <div class="topic-item" *ngFor="let topic of topics$ | async">
+        <mat-card-title class="title-topic-item">
+          {{ topic.title }}
+        </mat-card-title>
+        <mat-card-content>
+          <p class="topic-description">Description: {{ topic.description }}</p>
+        </mat-card-content>
+        <div class="button-container">
+          <!-- if the user is not subscribed to the topic, a button to subscribe is displayed and vice versa -->
+          <button class="subscribe-btn" *ngIf="!isSubscribed(topic)" mat-raised-button (click)="subscribe(topic)">S'abonner</button>
+          <button class="unsubscribe-btn" *ngIf="isSubscribed(topic)" mat-raised-button (click)="unSubscribe(topic)">Se désabonner</button>
+        </div>
       </div>
-    </mat-card>
   </div>
-
-  
-  
+</div>

@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { AuthService } from '../service/auth.service';
+import { AuthApiService } from '../service/auth-api.service';
 import { Router } from '@angular/router';
 import { RegisterRequest } from '../interface/registerRequest.interface';
+import { AuthService } from '../service/auth.service';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-register',
@@ -14,11 +16,12 @@ export class RegisterComponent {
   public onError = false;
   public hide = true;
 
-  constructor(private authService: AuthService,
+  constructor(private authApiService: AuthApiService,
+              private authService: AuthService,
               private fb: FormBuilder,
               private router: Router) { }
 
-
+  // Form for register
   public formRegister = this.fb.group({
     name: [
       '',
@@ -39,34 +42,18 @@ export class RegisterComponent {
       '',
       [
         Validators.required,
-        Validators.minLength(8), 
-        this.validatePassword
+        this.authService.validatePassword
       ]
     ]
   });
 
-  public validatePassword(control: { value: string; }) {
-    const password = control.value;
-
-    const hasNumber = /\d/.test(password);
-    const hasLower = /[a-z]/.test(password);
-    const hasUpper = /[A-Z]/.test(password);
-    const hasSpecial = /[!@#$%^&*]/.test(password);
-
-    const valid = hasNumber && hasLower && hasUpper && hasSpecial;
-
-    if (!valid) {
-      return { invalidPassword: true };
-    }
-
-    return null;
-  }
-
-
-  public submit(): void {
+  // Sends the register request to the server and redirects to the posts page when the form is submitted
+  public submitRegister(): void {
     const registerRequest = this.formRegister.value as RegisterRequest;
-    this.authService.register(registerRequest).subscribe({
-        next: (_: void) => this.router.navigate(['/login']),
+    this.authApiService.register(registerRequest)
+      .pipe(take(1))
+      .subscribe({
+        next: (_: void) => this.router.navigate(['/posts']),
         error: _ => this.onError = true,
       }
     );

@@ -14,14 +14,15 @@ import { CreatePostComponent } from './create-post/create-post.component';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 
-
 const materialModules = [
   MatButtonModule,
   MatCardModule,
   MatFormFieldModule,
   MatIconModule,
   MatInputModule,
-  MatSnackBarModule
+  MatSnackBarModule,
+  MatSelectModule,
+  MatIconModule,
 ]
 
 @NgModule({
@@ -36,8 +37,7 @@ const materialModules = [
     ReactiveFormsModule,
     HttpClientModule,
     PostRoutingModule,
-    MatSelectModule,
     ...materialModules
   ]
 })
-export class PostModule { }
+export class PostModule {}

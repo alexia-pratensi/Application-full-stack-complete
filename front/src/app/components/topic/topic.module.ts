@@ -10,13 +10,12 @@ import { HttpClientModule } from '@angular/common/http';
 import { TopicsListComponent } from './topic-list/topics-list.component';
 import { TopicRoutingModule } from './topic-routing.module';
 
-
 const materialModules = [
   MatButtonModule,
   MatCardModule,
   MatFormFieldModule,
   MatIconModule,
-  MatInputModule
+  MatInputModule,
 ]
 
 @NgModule({

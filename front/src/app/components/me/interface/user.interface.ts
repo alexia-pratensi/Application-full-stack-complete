@@ -5,8 +5,6 @@ export interface User {
     email: string;
     name: string;
     password: string;
-    topics: Topic[];	
-    createdAt: Date;
-    updatedAt?: Date;
+    topics: Topic[];
   }
   

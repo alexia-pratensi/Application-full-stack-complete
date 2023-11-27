@@ -4,7 +4,7 @@ import { TopicsListComponent } from "./topic-list/topics-list.component";
 import { AuthGuard } from "../auth/guards/auth.guard";
 
 const routes: Routes = [
-    { title: 'Topics', path: 'topics', component: TopicsListComponent, canActivate: [AuthGuard] },
+    { title: 'Topics', path: 'topics', component: TopicsListComponent, canActivate: [AuthGuard] }
 ];
 
 @NgModule({

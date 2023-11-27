@@ -1,0 +1,109 @@
+.post-container {
+  margin-top: 2rem;
+  .title-post-item {
+    margin: 0.5rem;
+    display: flex;
+    align-items: center;
+    h2 {
+      padding-left: 2rem;
+      margin-bottom: 0.5rem;
+      font-weight: 700;
+    }
+    mat-icon {
+      margin-left: 1rem;
+    }
+  }
+  .subtitle-post-item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 0rem 4rem 0rem 4rem;
+    flex-wrap: wrap;
+    .subtitle-item {
+      margin: 0rem .5rem;
+      color: rgba(8,8,8,1);
+    }
+  }
+  .article-description {
+    margin: 1.5rem 4.5rem 0rem 4.5rem; ;
+    display: flex;
+    flex-direction: column;
+    p {
+      margin-bottom: 1rem;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid #ccc;
+    }
+  }
+}
+
+.comment-container {
+  h2 {
+    padding-left: 4.5rem;
+    font-weight: 700;
+  }
+  .comment-content-container {
+    display: flex;
+    margin: 2rem 8rem 1rem 8rem;
+    justify-content: space-around;
+    .username {
+      margin:0rem;
+    }
+    .comment-content {
+      background-color: #eeeeee;
+      width: 80%;
+      border-radius: 0.5rem;
+      padding: 0.6rem;
+    }
+  }
+  .form-container {
+    display: flex;
+    margin: 2rem 0.5rem 1rem 8rem;
+    justify-content: space-around;
+    mat-form-field {
+      width: 80%;
+      textarea {
+        border: none;
+      }
+    }
+    .send-icon {
+      background-color: #FAFAFA;
+      border: none;
+      mat-icon {
+        font-size: 40px;
+        width: fit-content;
+        height: fit-content;
+        transform: rotate(-45deg);
+        color: #7451eb;
+      }
+    }
+  }
+}
+
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
+  color: black;
+  border-radius: 0.5rem;
+  @media only screen and (max-width: 425px){
+    color: transparent;
+  }
+}
+
+@media only screen and (max-width: 425px) {
+  .comment-container {
+    .comment-content-container {
+      width: 70%;
+      margin: 1rem auto;
+      flex-direction: column;
+    }
+    .form-container {
+      margin: 0rem 1rem 1rem 1rem;
+      border: 1px solid #0f0f0f;
+      border-radius: 0.5rem;
+      mat-form-field {
+        width: 100%;
+      }
+      .send-icon{
+        border-radius: 0.5rem;
+      }
+    }
+  }
+}
