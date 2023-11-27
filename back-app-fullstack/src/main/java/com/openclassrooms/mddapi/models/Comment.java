@@ -52,4 +52,5 @@ public class Comment {
 	@UpdateTimestamp
 	@Column(name = "updated_at")
 	private LocalDateTime updatedAt;
+
 }

@@ -5,6 +5,7 @@ import lombok.Data;
 
 @Data
 public class SignupRequest {
+
     @NotBlank
     @Email
     private String email;
@@ -15,4 +16,5 @@ public class SignupRequest {
     @NotBlank
     @Size(min = 8)
     private String password;
+
 }

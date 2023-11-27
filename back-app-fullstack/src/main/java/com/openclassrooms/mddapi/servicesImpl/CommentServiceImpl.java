@@ -20,6 +20,14 @@ public class CommentServiceImpl implements CommentService {
     @Autowired
     private PostRepository postRepository;
 
+    /**
+     * This method is used to create a new comment for a specific post.
+     * It retrieves the post by its id, creates a new comment from the provided DTO,
+     * adds the comment to the post, and saves the post.
+     *
+     * @param commentDto This is the DTO that contains the details of the comment.
+     * @param postId     This is the id of the post to which the comment is added.
+     */
     @Override
     public void createComment(CommentDto commentDto, Long postId) {
         Post post = postRepository.findById(postId).get();
@@ -33,6 +41,15 @@ public class CommentServiceImpl implements CommentService {
         postRepository.save(post);
     }
 
+    /**
+     * This method is used to retrieve all comments of a specific post.
+     * It retrieves the post by its id, gets the comments of the post, and
+     * transforms them to DTOs.
+     * If there are no comments, it returns an empty list.
+     *
+     * @param postId This is the id of the post whose comments are retrieved.
+     * @return List<CommentDto> This returns the list of comment DTOs.
+     */
     @Override
     public List<CommentDto> getAllComments(Long postId) {
         Post post = postRepository.findById(postId).get();
