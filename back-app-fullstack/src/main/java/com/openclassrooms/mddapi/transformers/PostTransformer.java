@@ -14,6 +14,9 @@ import com.openclassrooms.mddapi.models.Topic;
 import com.openclassrooms.mddapi.models.UserEntity;
 import com.openclassrooms.mddapi.repositories.TopicRepository;
 
+/**
+ * This class is used to transform Post entities to DTOs and vice versa.
+ */
 @Component
 public class PostTransformer {
     @Autowired

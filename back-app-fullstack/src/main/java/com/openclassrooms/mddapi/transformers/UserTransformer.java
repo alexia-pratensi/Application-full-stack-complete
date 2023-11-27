@@ -8,6 +8,9 @@ import com.openclassrooms.mddapi.dto.UserEntityDto;
 import com.openclassrooms.mddapi.models.Topic;
 import com.openclassrooms.mddapi.models.UserEntity;
 
+/**
+ * This class is used to transform User entities to DTOs and vice versa.
+ */
 @Component
 public class UserTransformer {
 

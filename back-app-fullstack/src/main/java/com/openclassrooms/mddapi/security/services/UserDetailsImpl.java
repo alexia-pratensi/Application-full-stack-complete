@@ -10,6 +10,16 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
+/**
+ * This class implements the UserDetails interface and provides the details of a
+ * user.
+ * It includes the user's id, name, username, and password, along with methods
+ * to get the authorities of the user,
+ * check if the account is not expired, not locked, credentials are not expired,
+ * and if the account is enabled.
+ * It also includes a method to check if two UserDetailsImpl objects are equal
+ * based on their id.
+ */
 @Builder
 @AllArgsConstructor
 @Getter

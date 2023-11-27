@@ -8,6 +8,9 @@ import com.openclassrooms.mddapi.dto.TopicDto;
 import com.openclassrooms.mddapi.models.Post;
 import com.openclassrooms.mddapi.models.Topic;
 
+/**
+ * This class is used to transform Topic entities to DTOs and vice versa.
+ */
 @Component
 public class TopicTransformer {
 
