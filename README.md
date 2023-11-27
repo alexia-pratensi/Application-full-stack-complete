@@ -1,25 +1,80 @@
-# P6-Full-Stack-reseau-dev
+# MDD fullstack app
 
-## Front
+This application is an MVP designed to create a social network dedicated to developers. The MVP app allows users to subscribe to topics related to programming and view their news feed with articles associated to the chosen topics. Users can also react to each article by posting comments.
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.1.3.
 
-Don't forget to install your node_modules before starting (`npm install`).
+## Features
 
-### Development server
+- User registration with name, email and password.
+- User login with email and password.
+- Get the news feed of articles related to the user's subscriptions, sorted by date.
+- Display the detail of a topic with the option to post a comment about it.
+- Create a new article.
+- Get the list of topics with the option to subscribe or unsubscribe.
+- Get the details of the currently logged-in user with the option to edit them (name, email, password) and unsubscribe from subscriptions.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
 
-### Build
+## Technologies Used
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+- Java 17
+- Angular CLI 14.2.12
+- Spring Boot 3
+- Lombok executable jar file
+- Spring Security with JWT (JSON Web Tokens) authentication
+- MySQL + MySQL Workbench
 
-### Where to start
 
-As you may have seen if you already started the app, a simple home page containing a logo, a title and a button is available. If you take a look at its code (in the `home.component.html`) you will see that an external UI library is already configured in the project.
+## Getting Started
 
-This library is `@angular/material`, it's one of the most famous in the angular ecosystem. As you can see on their docs (https://material.angular.io/), it contains a lot of highly customizable components that will help you design your interfaces quickly.
+### Prerequisites
 
-Note: I recommend to use material however it's not mandatory, if you prefer you can get ride of it.
+- Java Development Kit (JDK) 17
+- Maven
+- Angular CLI 14 and Nodes.js
+- MySQL
 
-Good luck!
+
+### Clone the Project
+
+git clone https://github.com/alexia-pratensi/Application-full-stack-complete.git
+
+### Install Dependencies
+
+#### On the frontend:
+
+- Go inside folder:  cd front
+
+- Run this command line:  npm install
+
+
+#### On the backend:
+
+- Go inside folder:  cd back-app-fullstack
+
+- Run this command line:  npm install
+
+
+### SQL setup
+
+SQL script to create the schema is available ressources/script-mdd.sql
+
+Don't forget to add your database credentials in application.properties :
+
+- spring.datasource.username=xxxx
+  
+- spring.datasource.password=xxxx
+
+
+## Run the project
+
+##### On the backend:
+
+Run this command line: mvn spring-boot:run
+
+##### On the frontend:
+
+Run this command line: npm run start
+
+## Author
+Alexia PRATENSI
+
