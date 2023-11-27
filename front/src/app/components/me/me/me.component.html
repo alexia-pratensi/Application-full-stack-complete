@@ -1,82 +1,56 @@
-<p>me works!</p>
-<div class="m3">
-    <mat-card>
-      <mat-card-title>
-        <div fxLayout="row" fxLayoutAlign="start center">
-          <button mat-icon-button (click)="back()">
-            <mat-icon>arrow_back</mat-icon>
-          </button>
-          <h1>User information</h1>
-        </div>
+<!-- User profile with form prefilled to edit name, email or password -->
+<div class="profile-container">
+  <h2>Profil d'utilisateur</h2>
+  <form class="form-container" [formGroup]="userForm" (ngSubmit)="submitUpdatingUser(user)">
+    <mat-form-field class="items" appearance=outline>
+        <input matInput formControlName="name">
+    </mat-form-field >
+    <mat-form-field class="items" appearance=outline>
+        <input matInput type="email" formControlName="email">
+    </mat-form-field>
+    <mat-form-field class="items" appearance=outline>
+        <input matInput type="password" placeholder="Mot de passe" formControlName="password">
+    </mat-form-field>
+    <!-- indicates steps to validate password by user -->
+    <div class="pwd-instructions">
+      <span *ngIf="userForm.get('password')?.hasError('invalidPassword')">
+        Le mot de passe doit contenir au moins 8 caractères dont un chiffre, une lettre majuscule, une lettre minuscule et un caractère spécial. 
+      </span>
+      <span *ngIf="onError" class="error ml2">Une erreur persiste.</span>
+    </div>
+    <button  mat-flat-button class="save-button" type="submit" [disabled]="userForm.invalid">Sauvegarder</button>
+  </form>
+  <!-- Link to logout the user -->
+  <div class="deconnect">
+    <button mat-raised-button class="deconnect-link" (click)="logout()">Se déconnecter</button>
+  </div>
+</div>
+
+<!-- Displays all user's topic(s) with a button to unsubscribe -->
+<!-- if the user has no subscription, a text to inform the user is displayed -->
+<div class="list-topic">
+  <hr>
+  <h2>Abonnements</h2>
+  <div class="topics-container">   
+    <div *ngIf="(userTopics$ | async)?.length === 0">
+      <p>Vous n'avez pas encore d'abonnement.</p>
+    </div>
+    <div class="topic-item" *ngFor="let topic of (userTopics$ | async)">
+      <mat-card-title class="title-topic-item">
+        {{ topic.title }}
       </mat-card-title>
-      <mat-card-content>
-
-
-
-
-    <mat-card-content *ngIf=" userForm">
-        <form class="mt2" fxLayout="column" [formGroup]=" userForm" (ngSubmit)="onSubmitUser(user)">
-          <mat-form-field appearance="outline" class="" fxFlex>
-            <!-- <mat-label>{{user.name}}</mat-label> -->
-            <input matInput formControlName="name">
-          </mat-form-field>
-
-          <mat-form-field appearance="outline" class="" fxFlex>
-            <!-- <mat-label>{{user.email}}</mat-label> -->
-            <input matInput formControlName="email" value={{user.email}}>
-          </mat-form-field>
-
-          
-          <mat-form-field appearance="outline" class="" fxFlex>
-            <!-- <mat-label>{{user.password}}</mat-label> -->
-            <input matInput formControlName="password" type="password" value={{user.password}}>
-          </mat-form-field>
-
-          <div fxLayout="row" fxLayoutAlign="center center">
-            <button mat-raised-button color="primary" type="submit" [disabled]="userForm.invalid">
-                Sauvegarder
-            </button>
-          </div>
-        </form>
-
-          <div fxLayout="column" class="my2" fxLayoutAlign="center center">
-            <p>Delete my account:</p>
-            <button mat-raised-button color="warn" (click)="logout()">
-              
-              <span class="ml1">se déconnecter</span>
-            </button>
-          </div>
-          
-      
-    </mat-card-content>
-
-
-
-  <!-- display les topics de user -->
-  <div class="m3">
-    <mat-card>
-      <mat-card-title>
-        <div fxLayout="row" fxLayoutAlign="start center">
-          <h1>My topics</h1>
-        </div>
-      </mat-card-title>
-      <mat-card-content>
-        <div *ngIf="user" fxLayout="column" fxLayoutAlign="start center">
-          <div *ngFor="let topic of (topicsFiltered$ | async)" fxLayout="row" fxLayoutAlign="start center">
-            <p>Title: {{ topic.title }} </p>
-            <p>Content: {{ topic.description }}</p>
-            <button  mat-raised-button color="warn" (click)="unSubscribe(topic,user)">
-              <mat-icon>person_remove</mat-icon>
-              <span class="ml1">se desabonner</span>
-            </button>
-          </div>
-        </div>
-        <div *ngIf="(topicsFiltered$ | async)?.length === 0" fxLayout="column" fxLayoutAlign="center center">
-          <p>No topics yet</p>
+      <mat-card-content> 
+        <p class="topic-description">Description: {{ topic.description }}</p>
+        <div class="button-container">
+          <button mat-raised-button (click)="unSubscribe(topic,user)">Se désabonner</button>
         </div>
       </mat-card-content>
-    
-    </mat-card>
+    </div>
   </div>
-        
+</div>
+
+
+
+
+
   

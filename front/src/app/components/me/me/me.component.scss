@@ -1,0 +1,121 @@
+h2 {
+    text-align: center;
+    margin-top: 2rem;
+    font-weight: 700;
+}
+
+.profile-container {
+    margin-bottom: 3rem;
+    .form-container {
+        display: flex;
+        flex-direction: column;
+        margin: 0 auto;
+        width: 15%; 
+        @media only screen and (max-width: 425px){
+            width: 80%;
+        }       
+        .pwd-instructions {
+            font-size: 0.8rem;
+            text-align: justify;
+            width: 100%;
+            margin-bottom: 1.5rem;
+            @media only screen and (max-width: 425px){
+                width: 80%;
+                margin: 1rem auto;
+            }
+        }
+        .save-button {
+            width: fit-content;
+            padding: 0px 2rem;
+            color: white;
+            background-color: #7451eb;
+            margin: 0 auto;
+        }
+    }
+    
+    .deconnect {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        .deconnect-link {
+            background: none;
+            color: rgb(145, 18, 18);
+            box-shadow: none;
+            font-weight: 600;
+        }
+    }
+}
+
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
+    color: #7451eb;
+}
+
+.list-topic {
+    hr {
+        width: 80%;
+        margin: 1rem auto;
+    }
+    .topics-container {
+        width: fit-content;
+        padding: 2rem;
+        display: grid;
+        grid-template-columns: auto auto;
+        margin: auto;
+        grid-gap: 3rem;
+        margin-bottom: 2rem;
+        @media only screen and (max-width: 425px){
+            display: flex;
+            flex-direction: column;
+            padding: 0rem;
+        }
+        .topic-item {
+            background-color: rgb(235, 233, 243);
+            border-radius: 12px;
+            padding: 1.5rem;
+            padding: 3rem 3rem 0rem 3rem;
+            width: 30rem;
+            height: 11rem;
+            overflow-y: scroll;
+            @media only screen and (max-width: 425px){
+                padding: 1rem;
+                width: 18rem;
+                margin: auto;
+            } 
+            .title-topic-item {
+                font-size: 1.2rem;
+            }     
+            .topic-description {
+                margin: .5rem auto 2rem auto;
+            }
+            .button-container {
+                display: flex;
+                align-items: center;
+                justify-content: space-around;
+                button {
+                    width: fit-content;
+                    padding: 0px 2rem;
+                    color: white;
+                    background-color: #7451eb;
+                }
+            }
+        }
+    }
+}
+
+
+@media only screen and (max-width: 425px) {
+    h2 {
+        font-size: 1.5rem;
+    }
+    .topics-container {
+        padding: 0rem;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .topic-item {
+        padding: 1rem;
+        width: 14rem;
+    }
+}
+

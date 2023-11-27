@@ -5,15 +5,12 @@ import {SessionService} from "../service/session.service";
 @Injectable({providedIn: 'root'})
 export class AuthGuard implements CanActivate {
 
-  constructor( 
-    private router: Router,
-    private sessionService: SessionService,
-  ) {
-  }
+  constructor(private router: Router,
+              private sessionService: SessionService) {}
 
+  // Allows access to the route if the user is logged in
+  // Otherwise, redirects to the login page
   public canActivate(): boolean {
-    console.log('AuthGuard#canActivate called');
-    console.log(this.sessionService.sessionInformation);
     if (!this.sessionService.isLogged) {
       this.router.navigateByUrl('/login');
       return false;

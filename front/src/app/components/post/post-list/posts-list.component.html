@@ -1,50 +1,31 @@
-<p>posts-list works!</p>
 <div class="list">
-  <!-- posts-list.component.html -->
-<button routerLink="/posts/create" class="btn btn-primary">Create</button>
-<button routerLink="/me" class="btn btn-primary">profil</button>
-
-    <mat-card>
-        <mat-card-header fxLayout="row" fxLayoutAlign="space-between center">
-            <mat-card-title class="m0">Posts</mat-card-title>
-        <button class="create-button" [routerLink]="['/topics']"></button>
-        <!-- <button class="create-button" mat-raised-button color="primary"  routerLink="create"> -->
-          <!-- <mat-icon>add</mat-icon>
-          <span class="ml1">Create</span>
-        </button> -->
+  <div class="top-container">
+    <button routerLink="/posts/create"  mat-flat-button class="create-button">Créer un article</button>
+    <!-- Toggle button to sort articles by date -->
+    <button mat-icon-button (click)="sortPostsByDate()" class="filter-button">
+      <span>Trier par  </span>
+      <mat-icon>{{ isDescending ? 'arrow_upward' : 'arrow_downward' }}</mat-icon>
+    </button>
+  </div>
+  <!-- Displays all articles from topics the user is subscribed to -->
+  <div class="article-container">
+    <ng-container *ngIf="(posts$ | async)?.length as postsLength; else noSubscription">
+    <mat-card-actions class="article-item" *ngFor="let post of posts$ | async" routerLink= {{post.id}}>
+      <mat-card-header>
+        <mat-card-title>{{ post.title }}</mat-card-title>
+        <mat-card-subtitle class="article-infos-header">
+          <p>{{ post.date | date: 'dd/MM/yyyy' }} </p>
+          <p>{{ post.user.name | titlecase }}</p>
+        </mat-card-subtitle>
       </mat-card-header>
-
-      <div class="items mt2" fxLayout="row wrap" fxLayout.lt-md="column">
-        <ng-container *ngIf="(posts$ | async)?.length as postsLength; else noSubscription">
-          
-          <mat-card class="item" *ngFor="let post of posts$ | async" fxFlex>
-            <mat-card-header>
-              <mat-card-title>{{ post.title }}</mat-card-title>
-              <mat-card-subtitle>
-                {{ post.date | date: 'longDate'}}
-              </mat-card-subtitle>
-              <p>name : {{ post.user.name}}</p>
-            </mat-card-header>
-            <mat-card-content>
-              <p>
-                {{ post.topic.title }}
-              </p>
-            </mat-card-content>
-            <mat-card-content>
-              <p>
-                {{ post.content }}
-              </p>
-            </mat-card-content>
-            <mat-card-actions>
-              <button mat-raised-button class="detail-button" color="primary" routerLink= {{post.id}}>
-                <mat-icon>search</mat-icon>
-                <span class="ml1">Detail</span>
-              </button>
-            </mat-card-actions>
-          </mat-card>
-        </ng-container>
-
-        <ng-template #noSubscription>
-          <p>Vous n'avez pas encore d'abonnement</p>
-        </ng-template>
-      </div>
+      <mat-card-content>
+        <p>Contenu: {{ post.content }}</p>
+      </mat-card-content>
+    </mat-card-actions>
+    </ng-container>
+  </div>
+  <!-- if the user has no subscription, a text to inform the user is displayed -->
+  <ng-template #noSubscription>
+    <p>Vous n'avez pas encore d'abonnement.</p>
+  </ng-template>
+</div>

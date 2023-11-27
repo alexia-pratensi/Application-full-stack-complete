@@ -22,12 +22,16 @@ export class TopicApiService {
     return this.httpClient.get<Topic>(`${this.pathTopicService}/${topicId}`);
   }
 
-  public subscribe(userId: string, topicId: string): Observable<void> {
+  public subscribeTopic(userId: string, topicId: string): Observable<void> {
     return this.httpClient.post<void>(`${this.pathUserService}/${userId}/subscribe/${topicId}`, {});
   }
 
-  public unSubscribe(userId: string, topicId: string): Observable<void> {
+  public unsubscribeTopic(userId: string, topicId: string): Observable<void> {
     return this.httpClient.delete<void>(`${this.pathUserService}/${userId}/unsubscribe/${topicId}`);
+  }
+
+  public getPostsOfTopic(topicId: string): Observable<any> {
+    return this.httpClient.get<any>(`${this.pathTopicService}/${topicId}/posts`);
   }
 
 }

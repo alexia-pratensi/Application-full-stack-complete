@@ -4,10 +4,12 @@ import { SessionService } from '../../auth/service/session.service';
 import { User } from '../interface/user.interface';
 import { UserApiService } from '../service/user-api.service';
 import { MeService } from '../service/me.service';
-import { Observable, of } from 'rxjs';
+import { Observable, of, take } from 'rxjs';
 import { Topic } from '../../topic/interface/topic.interface';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AuthService } from '../../auth/service/auth.service';
 import { TopicApiService } from '../../topic/service/topic-api.service';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-me',
@@ -16,44 +18,45 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 })
 export class MeComponent implements OnInit {
   
-  public topics$!: Observable<Topic[]>;
   public user!: User;
+  public userTopics$!: Observable<Topic[]>;
   public currentUser$: Observable<User> = this.meService.getCurrentUser();
-  public topicsFiltered$!: Observable<Topic[]>;
-  public filteredTopics!: Topic[];
-  public userForm: FormGroup | undefined;
+  public userForm!: FormGroup;
+  public onError = false;
+  public hide = true;
 
   constructor(private router: Router,
               private sessionService: SessionService,
               private userApiService: UserApiService,
               private meService: MeService,
+              private authService: AuthService,
               private topicApiService: TopicApiService,
-              private formBuilder: FormBuilder) { }
+              private formBuilder: FormBuilder,
+              private matSnackBar: MatSnackBar,) {}
 
   public ngOnInit(): void {
-    this.topics$ = this.topicApiService.getAll();
-    this.currentUser$.subscribe((user: User) => {
+    this.currentUser$.pipe(take(1)).subscribe((user: User) => {
       this.user = user;
       this.userUpdateForm(user);
-      this.fetchTopicsOfCurrentUser(user);
+      this.userTopics$ = this.getTopicsOfCurrentUser(user);
     });
   }
 
-  public fetchTopicsOfCurrentUser(user: User): Observable<Topic[]> {
-    this.topicApiService.getAll().subscribe((topics: Topic[]) => {
-      const userTopicIds = user.topics.map(topic => topic.id);
-      const filteredTopics = topics.filter(topic => userTopicIds.includes(topic.id));
-      this.topicsFiltered$ = of(filteredTopics);
-    });
-    return this.topicsFiltered$;
+  public getTopicsOfCurrentUser(user: User):Observable<Topic[]>{
+    return this.userApiService.getTopicsOfUser(user.id.toString()).pipe(take(1));
   }
 
   public unSubscribe(topic: Topic, user: User): void {
     if (topic) {
-      this.topicApiService.unSubscribe(user.id.toString(), topic.id.toString()).subscribe(() => {
-        this.userApiService.getById(user.id.toString()).subscribe((updatedUser: User) => {
+      this.topicApiService.unsubscribeTopic(user.id.toString(), topic.id.toString())
+      .pipe(take(1))
+      .subscribe(() => {
+        this.userApiService.getById(user.id.toString())
+        .pipe(take(1))
+        .subscribe((updatedUser: User) => {
           this.user = updatedUser;
-          this.fetchTopicsOfCurrentUser(this.user).subscribe((topics: Topic[]) => {
+          this.getTopicsOfCurrentUser(updatedUser).subscribe((topics: Topic[]) => {
+            this.userTopics$ = of(topics);
           });
         });
       });
@@ -63,27 +66,41 @@ export class MeComponent implements OnInit {
   public userUpdateForm(currentUser:User): void {
     this.userForm = this.formBuilder.group({
       name: [
-        currentUser.name
+        currentUser.name,
+        [
+          Validators.min(3),
+          Validators.max(20)
+        ]
       ],
       email: [
-        currentUser.email
+        currentUser.email,
+        Validators.email
       ], 
       password: [
-        currentUser.password
-      ]  
+        '',
+        [
+          this.authService.validatePassword,
+          Validators.required
+        ]
+      ],
     });
   }
 
-  public onSubmitUser(user: User): void {
+  public submitUpdatingUser(user: User): void {
     if (this.userForm!.valid) {
       const updatedUser: User = {
         ...user,
         name: this.userForm!.value.name,
         email: this.userForm!.value.email,
-        password: this.userForm!.value.password
+        password: this.userForm!.value.password ? this.userForm!.value.password : user.password
       };
-      this.userApiService.update(user.id.toString(), updatedUser).subscribe();
-      this.userUpdateForm(updatedUser);
+      this.userApiService.update(user.id.toString(), updatedUser)
+        .pipe(take(1))
+        .subscribe((response: any) => {
+          const message = response.message;
+          this.matSnackBar.open(message, 'Close', { duration: 3000 });
+          this.userUpdateForm(updatedUser);
+        });
     }
   }
 

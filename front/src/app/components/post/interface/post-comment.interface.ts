@@ -5,6 +5,4 @@ export interface PostComment {
     date: Date;
     content: string;
     user: User;
-    createdAt: Date;
-    updatedAt?: Date;
   }

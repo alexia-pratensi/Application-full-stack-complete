@@ -6,7 +6,5 @@ export interface Topic {
     description: string;
     date: Date;
     posts: Post[];
-    createdAt?: Date;
-    updatedAt?: Date;
   }
   

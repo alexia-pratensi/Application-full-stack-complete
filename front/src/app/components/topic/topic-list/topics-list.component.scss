@@ -1,0 +1,63 @@
+.topic-container {
+    width: fit-content;
+    padding: 2rem;
+    display: grid;
+    grid-template-columns: auto auto;
+    margin: auto;
+    grid-gap: 3rem;
+
+    .topic-item {
+        background-color: rgb(235, 233, 243);
+        border-radius: 12px;
+        padding: 1.5rem;
+        padding: 3rem 3rem 0rem 3rem;
+        width: 30rem;
+        height: 11rem; 
+        .title-topic-item {
+            font-size: 1.2rem;
+        }
+        .topic-description {
+            margin: .5rem auto 2rem auto;
+        }     
+        .button-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            button {
+                width: fit-content;
+                padding: 0px 2rem;
+                color: white;
+            }
+            .subscribe-btn {
+                background-color: #7451eb;
+                color: white;
+            }
+            .unsubscribe-btn {
+                background-color: #ffffff;
+                border: 1px solid #7451eb;
+                border-radius: 5px;
+                color: #7451eb;
+            }
+        }
+    }
+}
+
+@media (max-width: 425px) {
+    .list{
+        width: 90%;
+        margin: auto;
+        padding: 0rem;
+    }
+    .topic-container {
+        padding: 0rem;
+        display: flex;
+        flex-direction: column;
+        margin-top: 3rem;
+        .topic-item {
+            padding: 1rem;
+            width: 18rem;
+            height: 9rem;
+        }
+    }
+
+}

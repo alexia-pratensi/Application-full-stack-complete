@@ -24,4 +24,8 @@ export class UserApiService {
   public update(id: string, user: User): Observable<User> {
     return this.httpClient.put<User>(`${this.pathService}/${id}`, user);
   }
+
+  public getTopicsOfUser(id: string): Observable<any> {
+    return this.httpClient.get<any>(`${this.pathService}/${id}/topics`);
+  }
 }

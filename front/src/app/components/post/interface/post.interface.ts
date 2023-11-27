@@ -10,6 +10,4 @@ export interface Post {
     content: string;
     topic: Topic;
     comments: PostComment[];
-    createdAt: Date;
-    updatedAt?: Date;
 }
