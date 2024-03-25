@@ -51,7 +51,7 @@ git clone https://github.com/alexia-pratensi/Application-full-stack-complete.git
 
 - Go inside folder:  cd back-app-fullstack
 
-- Run this command line:  npm install
+- Run this command line:  mvn clean install
 
 
 ### SQL setup
